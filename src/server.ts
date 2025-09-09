@@ -181,7 +181,7 @@ class Server {
       }
 
       // Error genérico
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: 'Error interno del servidor',
         code: 'INTERNAL_ERROR',
