@@ -12,8 +12,8 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'API REST para gestión de tareas con autenticación JWT y roles de usuario',
       contact: {
-        name: 'Tu Nombre',
-        email: 'tu.email@ejemplo.com',
+        name: 'Master K',
+        email: 'masterkprod@gmail.com',
       },
       license: {
         name: 'MIT',
