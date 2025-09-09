@@ -40,7 +40,7 @@ export class AuthService {
         expiresIn: config.jwt.accessExpiresIn,
         issuer: 'task-manager-api',
         audience: 'task-manager-client',
-      }
+      } as jwt.SignOptions
     );
 
     const refreshToken = jwt.sign(
@@ -50,7 +50,7 @@ export class AuthService {
         expiresIn: config.jwt.refreshExpiresIn,
         issuer: 'task-manager-api',
         audience: 'task-manager-client',
-      }
+      } as jwt.SignOptions
     );
 
     return { accessToken, refreshToken };
@@ -109,7 +109,7 @@ export class AuthService {
         expiresIn: config.jwt.accessExpiresIn,
         issuer: 'task-manager-api',
         audience: 'task-manager-client',
-      }
+      } as jwt.SignOptions
     );
   }
 

@@ -63,7 +63,7 @@ const taskSchema = new Schema<ITask>({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'El ID del usuario es requerido'],
-  },
+  } as any,
 }, {
   timestamps: true,
 });

@@ -164,7 +164,8 @@ export class TaskController {
       }
 
       // Verificar permisos: solo el propietario o admin puede ver la tarea
-      if (req.user.role !== 'admin' && task.userId._id.toString() !== req.user._id.toString()) {
+      const taskUserId = typeof task.userId === 'string' ? task.userId : task.userId._id.toString();
+      if (req.user.role !== 'admin' && taskUserId !== req.user._id.toString()) {
         res.status(403).json({
           success: false,
           message: 'No tienes permisos para ver esta tarea',
