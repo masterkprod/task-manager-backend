@@ -4,6 +4,7 @@ import {
   validateUserRegistration, 
   validateUserLogin 
 } from '../middlewares/validation';
+import { authenticate } from '../middlewares/auth';
 
 const router = Router();
 
@@ -254,6 +255,6 @@ router.post('/refresh', AuthController.refreshToken);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get('/profile', AuthController.getProfile);
+router.get('/profile', authenticate, AuthController.getProfile);
 
 export default router;
