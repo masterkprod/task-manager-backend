@@ -35,7 +35,7 @@ export const config = {
   cookies: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    sameSite: 'strict' as const,
+    sameSite: 'none' as const, // Cambiado para permitir cross-origin
   },
 } as const;
 
