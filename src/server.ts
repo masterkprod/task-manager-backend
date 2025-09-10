@@ -49,7 +49,12 @@ class Server {
 
     // CORS
     this.app.use(cors({
-      origin: config.frontendUrl,
+      origin: [
+        'http://localhost:3000',                                    // Desarrollo local
+        'https://task-manager-frontend-two-zeta.vercel.app',        // Vercel
+        'https://task-manager-frontend.vercel.app',                 // Vercel alternativo
+        config.frontendUrl,                                         // Variable de entorno
+      ],
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
