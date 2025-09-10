@@ -23,7 +23,10 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     // Obtener el token del header Authorization
     const authHeader = req.headers.authorization;
     
+    console.log('Auth middleware - Authorization header:', authHeader);
+    
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log('Auth middleware - Missing or invalid authorization header');
       res.status(401).json({
         success: false,
         message: 'Token de acceso requerido',
@@ -33,14 +36,18 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     }
 
     const token = authHeader.substring(7); // Remover 'Bearer '
+    console.log('Auth middleware - Token:', token.substring(0, 20) + '...');
 
     // Verificar el token
     const payload = AuthService.verifyAccessToken(token);
+    console.log('Auth middleware - Token payload:', payload);
     
     // Buscar el usuario en la base de datos
     const user = await User.findById(payload.userId).select('+isActive');
+    console.log('Auth middleware - User found:', user ? 'Yes' : 'No');
     
     if (!user) {
+      console.log('Auth middleware - User not found');
       res.status(401).json({
         success: false,
         message: 'Usuario no encontrado',
@@ -50,6 +57,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     }
 
     if (!user.isActive) {
+      console.log('Auth middleware - User inactive');
       res.status(401).json({
         success: false,
         message: 'Usuario desactivado',
@@ -61,9 +69,11 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     // Agregar usuario y payload a la request
     req.user = user;
     req.tokenPayload = payload;
+    console.log('Auth middleware - Authentication successful');
     
     next();
   } catch (error) {
+    console.log('Auth middleware - Error:', error);
     res.status(401).json({
       success: false,
       message: error instanceof Error ? error.message : 'Token inválido',
