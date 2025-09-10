@@ -36,6 +36,7 @@ export const config = {
     secure: true, // Siempre true para sameSite: 'none' en HTTPS
     httpOnly: true,
     sameSite: 'none' as const, // Para permitir cross-origin
+    partitioned: true, // Para navegadores modernos (Chrome 120+)
   },
 } as const;
 
