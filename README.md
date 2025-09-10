@@ -1,224 +1,229 @@
-# 🚀 Task Manager Backend
+# 🎯 Task Manager - Aplicación Fullstack CRUD
 
-Backend API para la aplicación Task Manager construido con Express.js, TypeScript y MongoDB.
+Una aplicación moderna y completa para gestión de tareas con autenticación JWT, roles de usuario y una interfaz atractiva.
 
-## 🛠️ Tecnologías
-
-- **Express.js** - Framework web para Node.js
-- **TypeScript** - Tipado estático para JavaScript
-- **MongoDB** - Base de datos NoSQL
-- **Mongoose** - ODM para MongoDB
-- **JWT** - Autenticación con tokens
-- **Swagger** - Documentación de API
-- **Express Validator** - Validación de datos
-- **Helmet** - Seguridad HTTP
-- **CORS** - Cross-Origin Resource Sharing
-
-## 📋 Características
+## ✨ Características Principales
 
 ### 🔐 Autenticación y Seguridad
-- Autenticación JWT con access y refresh tokens
-- Cookies httpOnly para máxima seguridad
-- Roles de usuario (user/admin) con permisos
-- Rate limiting para prevenir abuso
-- Validación robusta de datos
-- Headers de seguridad con Helmet
+- **Autenticación JWT** con access tokens y refresh tokens seguros
+- **Cookies httpOnly** para máxima seguridad
+- **Roles de usuario** (usuario/admin) con permisos diferenciados
+- **Validación robusta** de datos de entrada
+- **Rate limiting** para prevenir abuso
+- **Helmet** para headers de seguridad
 
-### 📊 API REST
-- CRUD completo de tareas
-- Gestión de usuarios con roles
-- Estadísticas de productividad
-- Filtros y búsqueda avanzada
-- Paginación para grandes volúmenes
-- Documentación Swagger completa
+### 📋 Gestión de Tareas
+- **CRUD completo** de tareas con estados y prioridades
+- **Filtros avanzados** por estado, prioridad, fecha y búsqueda
+- **Estadísticas detalladas** de productividad
+- **Fechas de vencimiento** con alertas
+- **Paginación** para grandes volúmenes de datos
 
-## 🚀 Instalación
+### 🎨 Interfaz de Usuario
+- **Diseño moderno** con TailwindCSS
+- **Responsive design** para todos los dispositivos
+- **Animaciones suaves** y transiciones
+- **Tema atractivo** con gradientes y sombras
+- **Componentes reutilizables**
+- **UX optimizada**
+
+### 🛠️ Tecnologías
+
+#### Frontend
+- **Next.js 14** con App Router
+- **React 18** con TypeScript
+- **TailwindCSS** para estilos
+- **@tanstack/react-query** para manejo de estado
+- **React Hook Form** para formularios
+- **Lucide React** para iconos
+
+#### Backend
+- **Express.js** con TypeScript
+- **MongoDB** con Mongoose ODM
+- **JWT** para autenticación
+- **Swagger** para documentación
+- **Express Validator** para validación
+- **Helmet** para seguridad
+
+## 🚀 Instalación y Configuración
 
 ### Prerrequisitos
-- Node.js 18+
+- Node.js 18+ 
 - MongoDB (local o Atlas)
 - npm o yarn
 
-### 1. Instalar dependencias
+### 1. Clonar el repositorio
 ```bash
-npm install
+git clone <tu-repo-url>
+cd task-manager
 ```
 
-### 2. Configurar variables de entorno
+### 2. Configurar Variables de Entorno
+
+#### Frontend (Next.js)
 ```bash
+# Crear archivo de configuración
+cp env.example .env.local
+```
+
+**Configuración requerida:**
+```env
+# URL del backend API (SIN barra final)
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+**Para diferentes entornos:**
+- **Desarrollo local**: `http://localhost:5000`
+- **Backend en Render**: `https://task-manager-backend-hgdg.onrender.com`
+- **Backend personalizado**: `https://tu-dominio.com`
+
+#### Backend (Express.js)
+```bash
+# Crear archivo de configuración
 cp env.example .env
 ```
 
-Editar el archivo `.env`:
+**Configuración requerida:**
 ```env
 PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/task-manager
-JWT_ACCESS_SECRET=ccess_secret
-JWT_REFRESH_SECRET=refresh_secret
+JWT_ACCESS_SECRET=tu_access_secret_super_seguro
+JWT_REFRESH_SECRET=tu_refresh_secret_super_seguro
 JWT_ACCESS_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
 FRONTEND_URL=http://localhost:3000
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=100
 ```
 
-### 3. Iniciar servidor
+### 3. Instalar Dependencias
+
 ```bash
-# Desarrollo
+# Instalar dependencias del frontend
+npm install
+
+# Si tienes backend separado, instalar también:
+# cd Back && npm install
+```
+
+### 4. Configurar CORS (IMPORTANTE)
+
+**Para que la aplicación funcione correctamente, tu backend DEBE configurar CORS para permitir tu dominio frontend:**
+
+```javascript
+// En tu backend (Express.js)
+const cors = require('cors');
+
+app.use(cors({
+  origin: [
+    'http://localhost:3000',           // Desarrollo local
+    'https://tu-app.vercel.app',       // Producción Vercel
+    'https://tu-dominio.com'           // Tu dominio personalizado
+  ],
+  credentials: true
+}));
+```
+
+### 5. Iniciar la Aplicación
+
+```bash
+# Iniciar servidor de desarrollo
 npm run dev
-
-# Producción
-npm run build
-npm start
 ```
 
-## 📚 Documentación de la API
+**URLs disponibles:**
+- **Frontend**: `http://localhost:3000`
+- **Backend** (si está local): `http://localhost:5000`
+- **API**: `http://localhost:5000/api`
+- **Documentación**: `http://localhost:5000/api-docs`
 
-### Swagger UI
-Una vez iniciado el servidor, visita:
-```
-http://localhost:5000/api-docs
-```
+### 6. Verificar Configuración
 
-### Endpoints Principales
+**Para verificar que todo está configurado correctamente:**
+1. Visita `http://localhost:3000?config=true` para ver información de configuración
+2. Revisa la consola del navegador para errores de CORS
+3. Verifica que las variables de entorno estén cargadas correctamente
 
-#### Autenticación
-```
-POST   /api/auth/register    # Registro de usuario
-POST   /api/auth/login       # Inicio de sesión
-POST   /api/auth/logout      # Cerrar sesión
-POST   /api/auth/refresh     # Refrescar token
-GET    /api/auth/profile     # Obtener perfil
-```
+### 7. Backend Disponible
 
-#### Usuarios
-```
-PUT    /api/users/profile           # Actualizar perfil
-PUT    /api/users/change-password   # Cambiar contraseña
-PUT    /api/users/deactivate        # Desactivar cuenta
-GET    /api/users                   # Obtener usuarios (admin)
-GET    /api/users/:id               # Obtener usuario por ID (admin)
-PUT    /api/users/:id               # Actualizar usuario (admin)
-DELETE /api/users/:id               # Eliminar usuario (admin)
-```
+**Backend de demo está desplegado en Render:**
+- **URL**: `https://task-manager-backend-hgdg.onrender.com`
+- **API**: `https://task-manager-backend-hgdg.onrender.com/api`
+- **Documentación**: `https://task-manager-backend-hgdg.onrender.com/api-docs`
+- **Health Check**: `https://task-manager-backend-hgdg.onrender.com/health`
 
-#### Tareas
-```
-POST   /api/tasks           # Crear tarea
-GET    /api/tasks           # Obtener tareas
-GET    /api/tasks/stats     # Obtener estadísticas
-GET    /api/tasks/:id       # Obtener tarea por ID
-PUT    /api/tasks/:id       # Actualizar tarea
-DELETE /api/tasks/:id       # Eliminar tarea
-```
+**Credenciales de demostración:**
+- **Usuario**: `usuario@ejemplo.com`
+- **Contraseña**: `password123`
 
-### Colección de Postman
-Importa el archivo `postman-collection.json` en Postman para probar todos los endpoints.
-
-## 🏗️ Arquitectura
+## 📁 Estructura del Proyecto
 
 ```
-src/
-├── config/          # Configuración de la aplicación
-│   ├── config.ts    # Variables de entorno
-│   ├── database.ts  # Conexión a MongoDB
-│   └── swagger.ts   # Configuración de Swagger
-├── controllers/     # Controladores de rutas
-│   ├── authController.ts
-│   ├── userController.ts
-│   └── taskController.ts
-├── models/          # Modelos de MongoDB
-│   ├── User.ts
-│   └── Task.ts
-├── routes/          # Definición de rutas
-│   ├── auth.ts
-│   ├── users.ts
-│   └── tasks.ts
-├── middlewares/     # Middlewares personalizados
-│   ├── auth.ts      # Autenticación y autorización
-│   └── validation.ts # Validación de datos
-├── services/        # Lógica de negocio
-│   └── authService.ts
-├── utils/           # Utilidades
-└── server.ts        # Punto de entrada
+Task Manager/
+├── Back/                    # Backend (Express + MongoDB)
+│   ├── src/
+│   │   ├── config/         # Configuración
+│   │   ├── controllers/    # Controladores
+│   │   ├── models/         # Modelos de MongoDB
+│   │   ├── routes/         # Rutas de la API
+│   │   ├── middlewares/    # Middlewares
+│   │   ├── services/       # Servicios
+│   │   └── utils/          # Utilidades
+│   ├── postman-collection.json
+│   └── render.yaml
+├── Front/                   # Frontend (Next.js + React)
+│   ├── src/
+│   │   ├── app/           # Páginas (App Router)
+│   │   ├── components/    # Componentes React
+│   │   ├── hooks/         # Hooks personalizados
+│   │   ├── lib/           # Utilidades y API client
+│   │   ├── types/         # Tipos TypeScript
+│   │   └── styles/        # Estilos globales
+│   └── vercel.json
+└── README.md
 ```
 
-## 🔧 Scripts
+## 🔧 Scripts Disponibles
 
-```bash
-npm run dev          # Servidor de desarrollo con nodemon
-npm run build        # Compilar TypeScript
-npm run start        # Servidor de producción
-npm run lint         # Ejecutar ESLint
-npm run lint:fix     # Corregir errores de ESLint
-npm run format       # Formatear código con Prettier
-```
+### Backend
+- `npm run dev` - Servidor de desarrollo
+- `npm run build` - Compilar para producción
+- `npm run start` - Servidor de producción
+- `npm run lint` - Linter
+- `npm run format` - Formatear código
 
-## 🧪 Testing
-
-### Linting
-```bash
-npm run lint
-```
-
-### Formateo
-```bash
-npm run format
-```
+### Frontend
+- `npm run dev` - Servidor de desarrollo
+- `npm run build` - Compilar para producción
+- `npm run start` - Servidor de producción
+- `npm run lint` - Linter
+- `npm run format` - Formatear código
+- `npm run type-check` - Verificar tipos
 
 ## 🚀 Deployment
 
-### Render.com
+### Frontend en Vercel
+1. Conecta tu repositorio a Vercel
+2. Configura las variables de entorno:
+   - `NEXT_PUBLIC_API_URL`: URL de tu backend en Render
+3. Deploy automático en cada push
+
+### Backend en Render
 1. Conecta tu repositorio a Render
 2. Usa el archivo `render.yaml` para configuración automática
 3. Configura las variables de entorno en el dashboard
 4. Deploy automático en cada push
 
-### Variables de entorno para producción
-```env
-NODE_ENV=production
-MONGODB_URI=mongodb+srv://usuario:password@cluster.mongodb.net/task-manager
-JWT_ACCESS_SECRET=secreto_super_seguro_para_produccion
-JWT_REFRESH_SECRET=otro_secreto_super_seguro_para_produccion
-FRONTEND_URL=https://tu-frontend.vercel.app
-```
-
-## 🔒 Seguridad
-
-### Implementado
-- ✅ Autenticación JWT con refresh tokens
-- ✅ Cookies httpOnly y secure
-- ✅ Rate limiting
-- ✅ Validación de entrada
-- ✅ Headers de seguridad (Helmet)
-- ✅ CORS configurado
-- ✅ Sanitización de datos
-
-### Recomendaciones adicionales
-- Usar HTTPS en producción
-- Implementar logging de seguridad
-- Configurar firewall
-- Monitoreo de intentos de acceso
-- Backup regular de la base de datos
-
-## 📊 Monitoreo
-
-### Health Check
-```
-GET /health
-```
-
-Respuesta:
-```json
-{
-  "success": true,
-  "message": "Servidor funcionando correctamente",
-  "timestamp": "2024-01-01T00:00:00.000Z",
-  "environment": "development"
-}
-```
-
 ## 📄 Licencia
 
-MIT License - ver el archivo LICENSE para más detalles.
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 👨‍💻 Autor
+
+**Master K**
+- GitHub: [@masterkprod](https://github.com/masterkprod)
+- LinkedIn: [Gonzalo Vega](https://www.linkedin.com/in/gonzalo-jesus-vega/)
+- Email: masterkprod@gmail.com
+
+---
+
+⭐ **¡Si te gusta este proyecto, no olvides darle una estrella!** ⭐
