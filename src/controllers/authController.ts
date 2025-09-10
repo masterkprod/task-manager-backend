@@ -50,6 +50,7 @@ export class AuthController {
         data: {
           user: user.toJSON(),
           accessToken,
+          refreshToken, // También devolver el refresh token en la respuesta
         },
       });
     } catch (error) {
@@ -116,6 +117,7 @@ export class AuthController {
         data: {
           user: user.toJSON(),
           accessToken,
+          refreshToken, // También devolver el refresh token en la respuesta
         },
       });
     } catch (error) {
