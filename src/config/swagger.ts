@@ -22,11 +22,13 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://localhost:${config.port}`,
+        //LOCALHOST
+        url: `https://task-manager-backend-hgdg.onrender.com/:${config.port}`, // Cambiar a url localhost, usando render para demo.
         description: 'Servidor de desarrollo',
       },
       {
-        url: 'https://tu-backend-en-render.com',
+        //PUBLIC
+        url: 'https://task-manager-backend-hgdg.onrender.com/', // Url de demo, cambiar a url donde se hostea la API.
         description: 'Servidor de producción',
       },
     ],
